@@ -29,7 +29,7 @@ defmodule NameOfPerson.PersonName do
   def full(first, last), do: full(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def full(person = %NameOfPerson.PersonName{middle_name: ""}), do: String.trim("#{person.first_name} #{person.last_name}")
   def full(person = %NameOfPerson.PersonName{}), do: String.trim("#{person.first_name} #{person.middle_name} #{person.last_name}")
-  def full(name), do: full(%NameOfPerson.PersonName{first_name: name})
+  def full(name), do: full(convert_string_to_name(name))
 
   @doc """
   Returns first name and last initial, E.g. "Mitch S.".
@@ -57,7 +57,8 @@ defmodule NameOfPerson.PersonName do
     "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
   end
   def familiar(name) do
-    String.split(name, " ", trim: true)
+    name
+    |> convert_string_to_name()
     |> familiar()
   end
 
@@ -93,4 +94,25 @@ defmodule NameOfPerson.PersonName do
     |> abbreviated()
   end
 
+
+  @doc """
+  Returns first  initial and last name, E.g. "M. Stanley".
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.convert_string_to_name("Mitch Quantum Firefox Stanley")
+    %NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Quantum Firefox", last_name: "Stanley"}
+  """
+  def convert_string_to_name(name) do
+    name
+    |> String.split(" ", trim: true)
+    |> _convert_string_to_name()
+  end
+  defp _convert_string_to_name([first_name | tail] = name) when is_list(name) and length(name) > 2 do
+    [last_name | middle_names ] = Enum.reverse(tail)
+    middle_names = Enum.reverse(middle_names)
+    %NameOfPerson.PersonName{first_name: first_name, middle_name: Enum.join(middle_names, " "),last_name: last_name }
+  end
+  defp _convert_string_to_name([first, last]), do: %NameOfPerson.PersonName{first_name: first, last_name: last}
+  defp _convert_string_to_name([first]), do: %NameOfPerson.PersonName{first_name: first}
 end
