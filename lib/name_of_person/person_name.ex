@@ -40,6 +40,8 @@ defmodule NameOfPerson.PersonName do
     "Mitch S."
     iex> NameOfPerson.PersonName.familiar("Mitch Stanley")
     "Mitch S."
+    iex> NameOfPerson.PersonName.familiar("Mitch")
+    "Mitch"
     iex> NameOfPerson.PersonName.familiar("Mitch Blank Stanley")
     "Mitch S."
     iex> NameOfPerson.PersonName.familiar(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
@@ -47,11 +49,12 @@ defmodule NameOfPerson.PersonName do
   """
   def familiar(first, last), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar(first, middle, last), do: familiar(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def familiar([first]), do: familiar(%NameOfPerson.PersonName{first_name: first})
   def familiar([first, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar([first, middle, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
   def familiar(person = %NameOfPerson.PersonName{}) do
-    "#{String.trim(person.first_name)} #{String.trim(String.first(person.last_name))}."
+    "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
   end
   def familiar(name) do
     String.split(name, " ", trim: true)
@@ -59,5 +62,35 @@ defmodule NameOfPerson.PersonName do
   end
 
 
+  @doc """
+  Returns first  initial and last name, E.g. "M. Stanley".
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.abbreviated("Mitch", "Stanley")
+    "M. Stanley"
+    iex> NameOfPerson.PersonName.abbreviated(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+    "M. Stanley"
+    iex> NameOfPerson.PersonName.abbreviated("Mitch")
+    "Mitch"
+    iex> NameOfPerson.PersonName.abbreviated("Mitch Stanley")
+    "M. Stanley"
+    iex> NameOfPerson.PersonName.abbreviated("Mitch Blank Stanley")
+    "M. Stanley"
+  """
+  def abbreviated(first, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def abbreviated(first, middle, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def abbreviated([first]), do: abbreviated(%NameOfPerson.PersonName{first_name: first})
+  def abbreviated([first, last]), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def abbreviated([first, middle, last]), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def abbreviated(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
+  def abbreviated(person = %NameOfPerson.PersonName{}) do
+    "#{String.first(String.trim(person.first_name))}. #{String.trim(person.last_name)}"
+  end
+  def abbreviated(name) do
+    name
+    |> String.split(" ", trim: true)
+    |> abbreviated()
+  end
 
 end
