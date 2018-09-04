@@ -90,13 +90,43 @@ defmodule NameOfPerson.PersonName do
   end
   def abbreviated(name) do
     name
-    |> String.split(" ", trim: true)
+    |> convert_string_to_name()
     |> abbreviated()
   end
 
+  @doc """
+  Returns last then first name for sorting.
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.sorted("Mitch", "Stanley")
+    "Stanley, Mitch"
+    iex> NameOfPerson.PersonName.sorted(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+    "Stanley, Mitch"
+    iex> NameOfPerson.PersonName.sorted("Mitch")
+    "Mitch"
+    iex> NameOfPerson.PersonName.sorted("Mitch Stanley")
+    "Stanley, Mitch"
+    iex> NameOfPerson.PersonName.sorted("Mitch Blank Stanley")
+    "Stanley, Mitch"
+  """
+  def sorted(first, last), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def sorted(first, middle, last), do: sorted(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def sorted([first]), do: sorted(%NameOfPerson.PersonName{first_name: first})
+  def sorted([first, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def sorted([first, middle, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def sorted(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
+  def sorted(person = %NameOfPerson.PersonName{}) do
+    "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
+  end
+  def sorted(name) do
+    name
+    |> convert_string_to_name()
+    |> sorted()
+  end
 
   @doc """
-  Returns first  initial and last name, E.g. "M. Stanley".
+  Generates a PersonName struct from a string.
 
   ## Examples
 
@@ -109,10 +139,15 @@ defmodule NameOfPerson.PersonName do
     |> _convert_string_to_name()
   end
   defp _convert_string_to_name([first_name | tail] = name) when is_list(name) and length(name) > 2 do
-    [last_name | middle_names ] = Enum.reverse(tail)
-    middle_names = Enum.reverse(middle_names)
-    %NameOfPerson.PersonName{first_name: first_name, middle_name: Enum.join(middle_names, " "),last_name: last_name }
+    [last_name | middle_names ] = _fetch_other_names(tail)
+    %NameOfPerson.PersonName{first_name: first_name, middle_name: middle_names,last_name: last_name }
   end
   defp _convert_string_to_name([first, last]), do: %NameOfPerson.PersonName{first_name: first, last_name: last}
   defp _convert_string_to_name([first]), do: %NameOfPerson.PersonName{first_name: first}
+
+  defp _fetch_other_names(name) when is_list(name) do
+    [last_name | middle_names ] = Enum.reverse(name)
+    middle_names = Enum.reverse(middle_names) |> Enum.join(" ")
+    [last_name | middle_names]
+  end
 end
