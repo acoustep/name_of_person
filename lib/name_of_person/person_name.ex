@@ -25,11 +25,11 @@ defmodule NameOfPerson.PersonName do
       "Mitch"
 
   """
+  def full(name) when is_binary(name), do: name |> convert_string_to_name |> full
   def full(first, middle, last), do: full(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
   def full(first, last), do: full(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def full(person = %NameOfPerson.PersonName{middle_name: ""}), do: String.trim("#{person.first_name} #{person.last_name}")
   def full(person = %NameOfPerson.PersonName{}), do: String.trim("#{person.first_name} #{person.middle_name} #{person.last_name}")
-  def full(name), do: full(convert_string_to_name(name))
 
   @doc """
   Returns first name and last initial, E.g. "Mitch S.".
@@ -47,20 +47,14 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.familiar(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
     "Mitch S."
   """
+  def familiar(name) when is_binary(name), do: name |> convert_string_to_name |> familiar
   def familiar(first, last), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar(first, middle, last), do: familiar(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
   def familiar([first]), do: familiar(%NameOfPerson.PersonName{first_name: first})
   def familiar([first, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar([first, middle, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def familiar(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
-  def familiar(person = %NameOfPerson.PersonName{}) do
-    "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
-  end
-  def familiar(name) do
-    name
-    |> convert_string_to_name()
-    |> familiar()
-  end
+  def familiar(person = %NameOfPerson.PersonName{}), do: "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
 
 
   @doc """
@@ -79,6 +73,7 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.abbreviated("Mitch Blank Stanley")
     "M. Stanley"
   """
+  def abbreviated(name) when is_binary(name), do: name |> convert_string_to_name() |> abbreviated()
   def abbreviated(first, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def abbreviated(first, middle, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
   def abbreviated([first]), do: abbreviated(%NameOfPerson.PersonName{first_name: first})
@@ -87,11 +82,6 @@ defmodule NameOfPerson.PersonName do
   def abbreviated(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
   def abbreviated(person = %NameOfPerson.PersonName{}) do
     "#{String.first(String.trim(person.first_name))}. #{String.trim(person.last_name)}"
-  end
-  def abbreviated(name) do
-    name
-    |> convert_string_to_name()
-    |> abbreviated()
   end
 
   @doc """
@@ -110,20 +100,14 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.sorted("Mitch Blank Stanley")
     "Stanley, Mitch"
   """
+  def sorted(name) when is_binary(name), do: name |> convert_string_to_name |> sorted
   def sorted(first, last), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def sorted(first, middle, last), do: sorted(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
   def sorted([first]), do: sorted(%NameOfPerson.PersonName{first_name: first})
   def sorted([first, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def sorted([first, middle, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def sorted(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
-  def sorted(person = %NameOfPerson.PersonName{}) do
-    "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
-  end
-  def sorted(name) do
-    name
-    |> convert_string_to_name()
-    |> sorted()
-  end
+  def sorted(person = %NameOfPerson.PersonName{}), do: "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
 
   @doc """
   Generates a PersonName struct from a string.
