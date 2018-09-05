@@ -109,6 +109,46 @@ defmodule NameOfPerson.PersonName do
   def sorted(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
   def sorted(person = %NameOfPerson.PersonName{}), do: "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
 
+
+  @doc """
+  Returns full name with the trailing 's or ' if name ends in s.
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.possessive("Mitch", "Stanley")
+    "Mitch Stanley's"
+    iex> NameOfPerson.PersonName.possessive("Ned", "Flanders")
+    "Ned Flanders'"
+    iex> NameOfPerson.PersonName.possessive(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+    "Mitch Stanley's"
+    iex> NameOfPerson.PersonName.possessive(%NameOfPerson.PersonName{first_name: "Ned", last_name: "Flanders"})
+    "Ned Flanders'"
+    iex> NameOfPerson.PersonName.possessive("Mitch")
+    "Mitch's"
+    iex> NameOfPerson.PersonName.possessive("Mitch Stanley")
+    "Mitch Stanley's"
+    iex> NameOfPerson.PersonName.possessive("Mitch Blank Stanley")
+    "Mitch Blank Stanley's"
+  """
+  def possessive(name) when is_binary(name), do: name |> convert_string_to_name |> possessive
+  def possessive(first, last), do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def possessive(first, middle, last), do: possessive(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def possessive([first]), do: possessive(%NameOfPerson.PersonName{first_name: first})
+  def possessive([first, last]), do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def possessive([first, middle, last]), do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def possessive(person = %NameOfPerson.PersonName{last_name: ""}), do: _possessive("#{String.trim(person.first_name)}")
+  def possessive(person = %NameOfPerson.PersonName{middle_name: ""}), do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.last_name)}")
+  def possessive(person = %NameOfPerson.PersonName{}), do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.middle_name)} #{String.trim(person.last_name)}")
+  defp _possessive(person) when is_binary(person) do
+    # reversed = person |> String.reverse |> List.first
+    # IO.puts inspect(reversed)
+    case person |> String.last do
+      "s" -> "#{person}'"
+      _ -> "#{person}'s"
+    end
+  end
+
+
   @doc """
   Generates a PersonName struct from a string.
 
