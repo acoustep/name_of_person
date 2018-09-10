@@ -1,6 +1,44 @@
-# NameOfPerson
+# Name of Person
 
-**TODO: Add description**
+This is a port of Basecamp's Ruby library [Name of Person](https://github.com/basecamp/name_of_person) to Elixir. From their description:
+
+>Presenting names for English-language applications where a basic model of first and last name(s) combined is sufficient. This approach is not meant to cover all possible naming cases, deal with other languages, or even titulations. Just the basics.
+
+This library also accepts middle names and uses them where appropriate.
+
+## Example usage
+
+```
+iex> NameOfPerson.PersonName.full("Ned Flanders")
+"Ned Flanders"
+iex> NameOfPerson.PersonName.familiar("Frodo", "Baggins")
+"Frodo B."
+iex> NameOfPerson.PersonName.abbreviated(%NameOfPerson.PersonName{first_name: "Kaladin", last_name: "Stormblessed"})
+"K. Stormblessed"
+iex> NameOfPerson.PersonName.possessive(["Dirk", "Gentley"])
+"Derk Gentley's"
+```
+
+## Available Arguments
+
+Most functions accept from one to three string parameters, e.g. `full/1, full/2, full/3`. Additionally, you can pass a List of names or a `%NameOfPerson.PersonName{}` struct. The struct can take 3 arguments, `first_name`, `middle_name`, and `last_name`.
+
+`full/1` will look for spaces and split the names up appropriately. `full/2` will assume the first parameter is the first name and the second parameter is the last name. `full/3` takes a first, middle, and last name. In some cases, e.g. initials, the middlename is checked for multiple names within itself.
+
+## Available methods
+
+* `full`
+* `initials`
+* `familiar`
+* `abbreviated`
+* `sorted`
+* `mentionable`
+* `possessive`
+
+## Todo
+
+* Functions for `first`, `last` and `middle` names.
+* More testing
 
 ## Installation
 
