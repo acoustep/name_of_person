@@ -199,6 +199,48 @@ defmodule NameOfPerson.PersonName do
   end
   defp _get_initial(name), do: String.first(String.trim(name))
 
+
+  @doc """
+  Returns a mentionable version of their name.
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.mentionable("Mitch", "Stanley")
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Blank", last_name: "Stanley"})
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable("Mitch")
+    "mitch"
+    iex> NameOfPerson.PersonName.mentionable("Mitch Stanley")
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable("mitch stanley")
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable("Mitch Blank Stanley")
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable("Mitch Quantum Firefox Stanley")
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable(["Mitch", "Quantum Firefox", "Stanley"])
+    "mitchs"
+    iex> NameOfPerson.PersonName.mentionable(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Quantum Firefox", last_name: "Stanley"})
+    "mitchs"
+  """
+  def mentionable(first, last), do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def mentionable(first, middle, last), do: mentionable(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def mentionable([first]), do: mentionable(%NameOfPerson.PersonName{first_name: first})
+  def mentionable([first, last]), do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def mentionable([first, middle, last]), do: mentionable(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def mentionable(name) when is_binary(name), do: name |> convert_string_to_name |> mentionable
+  def mentionable(person = %NameOfPerson.PersonName{}), do: _mentionable(person)
+  defp _mentionable(person = %NameOfPerson.PersonName{}) do
+    person
+    |> familiar()
+    |> String.trim_trailing(".")
+    |> String.replace(" ", "")
+    |> String.downcase
+  end
+
   @doc """
   Generates a PersonName struct from a string.
 
