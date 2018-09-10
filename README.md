@@ -8,15 +8,16 @@ This library also accepts middle names and uses them where appropriate.
 
 ## Example usage
 
-```
-iex> NameOfPerson.PersonName.full("Ned Flanders")
+```elixir
+alias NameOfPerson.PersonName
+iex> PersonName.full("Ned Flanders")
 "Ned Flanders"
-iex> NameOfPerson.PersonName.familiar("Frodo", "Baggins")
+iex> PersonName.familiar("Frodo", "Baggins")
 "Frodo B."
-iex> NameOfPerson.PersonName.abbreviated(%NameOfPerson.PersonName{first_name: "Kaladin", last_name: "Stormblessed"})
+iex> PersonName.abbreviated(%PersonName{first_name: "Kaladin", last_name: "Stormblessed"})
 "K. Stormblessed"
-iex> NameOfPerson.PersonName.possessive(["Dirk", "Gentley"])
-"Derk Gentley's"
+iex> PersonName.possessive(["Dirk", "Gentley"])
+"Dirk Gentley's"
 ```
 
 ## Available Arguments
