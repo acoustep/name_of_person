@@ -1,5 +1,6 @@
 defmodule NameOfPerson.PersonName do
   defstruct first_name: "", middle_name: "", last_name: ""
+
   @moduledoc """
   Documentation for NameOfPerson.PersonName.
   """
@@ -25,11 +26,17 @@ defmodule NameOfPerson.PersonName do
       "Mitch"
 
   """
-  def full(first, middle, last), do: full(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def full(first, middle, last),
+    do: full(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def full(first, last), do: full(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def full(name) when is_binary(name), do: name |> convert_string_to_name |> full
-  def full(person = %NameOfPerson.PersonName{middle_name: ""}), do: String.trim("#{person.first_name} #{person.last_name}")
-  def full(person = %NameOfPerson.PersonName{}), do: String.trim("#{person.first_name} #{person.middle_name} #{person.last_name}")
+
+  def full(person = %NameOfPerson.PersonName{middle_name: ""}),
+    do: String.trim("#{person.first_name} #{person.last_name}")
+
+  def full(person = %NameOfPerson.PersonName{}),
+    do: String.trim("#{person.first_name} #{person.middle_name} #{person.last_name}")
 
   @doc """
   Returns first name and last initial, E.g. "Mitch S.".
@@ -47,14 +54,28 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.familiar(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
     "Mitch S."
   """
-  def familiar(first, last), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def familiar(first, middle, last), do: familiar(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def familiar(first, last),
+    do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def familiar(first, middle, last),
+    do:
+      familiar(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def familiar([first]), do: familiar(%NameOfPerson.PersonName{first_name: first})
-  def familiar([first, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def familiar([first, _middle, last]), do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def familiar([first, last]),
+    do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def familiar([first, _middle, last]),
+    do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
   def familiar(name) when is_binary(name), do: name |> convert_string_to_name |> familiar
-  def familiar(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
-  def familiar(person = %NameOfPerson.PersonName{}), do: "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
+
+  def familiar(person = %NameOfPerson.PersonName{last_name: ""}),
+    do: "#{String.trim(person.first_name)}"
+
+  def familiar(person = %NameOfPerson.PersonName{}),
+    do: "#{String.trim(person.first_name)} #{String.first(String.trim(person.last_name))}."
 
   @doc """
   Returns first  initial and last name, E.g. "M. Stanley".
@@ -72,13 +93,31 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.abbreviated("Mitch Blank Stanley")
     "M. Stanley"
   """
-  def abbreviated(first, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def abbreviated(first, middle, last), do: abbreviated(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def abbreviated(first, last),
+    do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def abbreviated(first, middle, last),
+    do:
+      abbreviated(%NameOfPerson.PersonName{
+        first_name: first,
+        middle_name: middle,
+        last_name: last
+      })
+
   def abbreviated([first]), do: abbreviated(%NameOfPerson.PersonName{first_name: first})
-  def abbreviated([first, last]), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def abbreviated([first, _middle, last]), do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def abbreviated(name) when is_binary(name), do: name |> convert_string_to_name() |> abbreviated()
-  def abbreviated(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
+
+  def abbreviated([first, last]),
+    do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def abbreviated([first, _middle, last]),
+    do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def abbreviated(name) when is_binary(name),
+    do: name |> convert_string_to_name() |> abbreviated()
+
+  def abbreviated(person = %NameOfPerson.PersonName{last_name: ""}),
+    do: "#{String.trim(person.first_name)}"
+
   def abbreviated(person = %NameOfPerson.PersonName{}) do
     "#{String.first(String.trim(person.first_name))}. #{String.trim(person.last_name)}"
   end
@@ -99,14 +138,27 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.sorted("Mitch Blank Stanley")
     "Stanley, Mitch"
   """
-  def sorted(first, last), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def sorted(first, middle, last), do: sorted(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def sorted(first, last),
+    do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def sorted(first, middle, last),
+    do: sorted(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def sorted([first]), do: sorted(%NameOfPerson.PersonName{first_name: first})
-  def sorted([first, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def sorted([first, _middle, last]), do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def sorted([first, last]),
+    do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def sorted([first, _middle, last]),
+    do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
   def sorted(name) when is_binary(name), do: name |> convert_string_to_name |> sorted
-  def sorted(person = %NameOfPerson.PersonName{last_name: ""}), do: "#{String.trim(person.first_name)}"
-  def sorted(person = %NameOfPerson.PersonName{}), do: "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
+
+  def sorted(person = %NameOfPerson.PersonName{last_name: ""}),
+    do: "#{String.trim(person.first_name)}"
+
+  def sorted(person = %NameOfPerson.PersonName{}),
+    do: "#{String.trim(person.last_name)}, #{String.trim(person.first_name)}"
 
   @doc """
   Returns full name with the trailing 's or ' if name ends in s.
@@ -129,19 +181,42 @@ defmodule NameOfPerson.PersonName do
     "Mitch Blank Stanley's"
   """
 
-  def possessive(first, last), do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def possessive(first, middle, last), do: possessive(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def possessive(first, last),
+    do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def possessive(first, middle, last),
+    do:
+      possessive(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def possessive([first]), do: possessive(%NameOfPerson.PersonName{first_name: first})
-  def possessive([first, last]), do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def possessive([first, middle, last]), do: possessive(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def possessive([first, last]),
+    do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def possessive([first, middle, last]),
+    do:
+      possessive(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def possessive(name) when is_binary(name), do: name |> convert_string_to_name |> possessive
-  def possessive(person = %NameOfPerson.PersonName{last_name: ""}), do: _possessive("#{String.trim(person.first_name)}")
-  def possessive(person = %NameOfPerson.PersonName{middle_name: ""}), do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.last_name)}")
-  def possessive(person = %NameOfPerson.PersonName{}), do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.middle_name)} #{String.trim(person.last_name)}")
+
+  def possessive(person = %NameOfPerson.PersonName{last_name: ""}),
+    do: _possessive("#{String.trim(person.first_name)}")
+
+  def possessive(person = %NameOfPerson.PersonName{middle_name: ""}),
+    do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.last_name)}")
+
+  def possessive(person = %NameOfPerson.PersonName{}),
+    do:
+      _possessive(
+        "#{String.trim(person.first_name)} #{String.trim(person.middle_name)} #{
+          String.trim(person.last_name)
+        }"
+      )
+
   defp _possessive(person) when is_binary(person) do
     # reversed = person |> String.reverse |> List.first
     # IO.puts inspect(reversed)
-    case person |> String.last do
+    case person |> String.last() do
       "s" -> "#{person}'"
       _ -> "#{person}'s"
     end
@@ -173,32 +248,48 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.initials(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Quantum Firefox", last_name: "Stanley"})
     "MQFS"
   """
-  def initials(first, last), do: initials(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def initials(first, middle, last), do: initials(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def initials(first, last),
+    do: initials(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def initials(first, middle, last),
+    do:
+      initials(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def initials([first]), do: initials(%NameOfPerson.PersonName{first_name: first})
-  def initials([first, last]), do: initials(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def initials([first, middle, last]), do: initials(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def initials([first, last]),
+    do: initials(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def initials([first, middle, last]),
+    do:
+      initials(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
   def initials(name) when is_binary(name), do: name |> convert_string_to_name |> initials
   def initials(person = %NameOfPerson.PersonName{}), do: _initials(person)
+
   defp _initials(person = %NameOfPerson.PersonName{}) do
     case person do
-      %NameOfPerson.PersonName{last_name: "", middle_name: ""} -> 
+      %NameOfPerson.PersonName{last_name: "", middle_name: ""} ->
         person.first_name
-          |> _get_initial
-          |> String.upcase
-      %NameOfPerson.PersonName{last_name: ""} -> 
-        _get_initial(person.first_name) <> _get_initial(person.middle_name)
-          |> String.upcase
-      %NameOfPerson.PersonName{middle_name: ""} -> 
-        _get_initial(person.first_name) <> initials(person.last_name)
-          |> String.upcase
-      _ -> 
-        _get_initial(person.first_name) <> initials(person.middle_name) <> _get_initial(person.last_name)
-          |> String.upcase
+        |> _get_initial
+        |> String.upcase()
+
+      %NameOfPerson.PersonName{last_name: ""} ->
+        (_get_initial(person.first_name) <> _get_initial(person.middle_name))
+        |> String.upcase()
+
+      %NameOfPerson.PersonName{middle_name: ""} ->
+        (_get_initial(person.first_name) <> initials(person.last_name))
+        |> String.upcase()
+
+      _ ->
+        (_get_initial(person.first_name) <>
+           initials(person.middle_name) <> _get_initial(person.last_name))
+        |> String.upcase()
     end
   end
-  defp _get_initial(name), do: String.first(String.trim(name))
 
+  defp _get_initial(name), do: String.first(String.trim(name))
 
   @doc """
   Returns a mentionable version of their name.
@@ -226,19 +317,39 @@ defmodule NameOfPerson.PersonName do
     iex> NameOfPerson.PersonName.mentionable(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Quantum Firefox", last_name: "Stanley"})
     "mitchs"
   """
-  def mentionable(first, last), do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def mentionable(first, middle, last), do: mentionable(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+  def mentionable(first, last),
+    do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def mentionable(first, middle, last),
+    do:
+      mentionable(%NameOfPerson.PersonName{
+        first_name: first,
+        middle_name: middle,
+        last_name: last
+      })
+
   def mentionable([first]), do: mentionable(%NameOfPerson.PersonName{first_name: first})
-  def mentionable([first, last]), do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
-  def mentionable([first, middle, last]), do: mentionable(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def mentionable([first, last]),
+    do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def mentionable([first, middle, last]),
+    do:
+      mentionable(%NameOfPerson.PersonName{
+        first_name: first,
+        middle_name: middle,
+        last_name: last
+      })
+
   def mentionable(name) when is_binary(name), do: name |> convert_string_to_name |> mentionable
   def mentionable(person = %NameOfPerson.PersonName{}), do: _mentionable(person)
+
   defp _mentionable(person = %NameOfPerson.PersonName{}) do
     person
     |> familiar()
     |> String.trim_trailing(".")
     |> String.replace(" ", "")
-    |> String.downcase
+    |> String.downcase()
   end
 
   @doc """
@@ -254,15 +365,25 @@ defmodule NameOfPerson.PersonName do
     |> String.split(" ", trim: true)
     |> _convert_string_to_name()
   end
-  defp _convert_string_to_name([first_name | tail] = name) when is_list(name) and length(name) > 2 do
-    [last_name | middle_names ] = _fetch_other_names(tail)
-    %NameOfPerson.PersonName{first_name: first_name, middle_name: middle_names,last_name: last_name }
+
+  defp _convert_string_to_name([first_name | tail] = name)
+       when is_list(name) and length(name) > 2 do
+    [last_name | middle_names] = _fetch_other_names(tail)
+
+    %NameOfPerson.PersonName{
+      first_name: first_name,
+      middle_name: middle_names,
+      last_name: last_name
+    }
   end
-  defp _convert_string_to_name([first, last]), do: %NameOfPerson.PersonName{first_name: first, last_name: last}
+
+  defp _convert_string_to_name([first, last]),
+    do: %NameOfPerson.PersonName{first_name: first, last_name: last}
+
   defp _convert_string_to_name([first]), do: %NameOfPerson.PersonName{first_name: first}
 
   defp _fetch_other_names(name) when is_list(name) do
-    [last_name | middle_names ] = Enum.reverse(name)
+    [last_name | middle_names] = Enum.reverse(name)
     middle_names = Enum.reverse(middle_names) |> Enum.join(" ")
     [last_name | middle_names]
   end
