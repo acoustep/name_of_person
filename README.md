@@ -28,17 +28,20 @@ Most functions accept from one to three string parameters, e.g. `full/1, full/2,
 
 ## Available methods
 
+* `abbreviated`
+* `familiar`
+* `first`
 * `full`
 * `initials`
-* `familiar`
-* `abbreviated`
-* `sorted`
+* `last`
+* `last!`
+* `has_last?`
 * `mentionable`
 * `possessive`
+* `sorted`
 
 ## Todo
 
-* Functions for `first`, `last` and `middle` names.
 * More testing
 
 ## Installation

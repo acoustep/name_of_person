@@ -6,6 +6,36 @@ defmodule NameOfPerson.PersonName do
   """
 
   @doc """
+  Get the first name.
+
+  ## Examples
+
+      iex> NameOfPerson.PersonName.first("Mitch")
+      "Mitch"
+      iex> NameOfPerson.PersonName.first("Mitch Stanley")
+      "Mitch"
+      iex> NameOfPerson.PersonName.first("Mitch", "Stanley")
+      "Mitch"
+      iex> NameOfPerson.PersonName.first("Mitch", "Blank", "Stanley")
+      "Mitch"
+      iex> NameOfPerson.PersonName.first(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Blank", last_name: "Stanley"})
+      "Mitch"
+      iex> NameOfPerson.PersonName.first(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+      "Mitch"
+      iex> NameOfPerson.PersonName.first(%NameOfPerson.PersonName{first_name: "Mitch"})
+      "Mitch"
+
+  """
+  def first(first, middle, last),
+    do: first(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def first(first, last), do: first(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def first(name) when is_binary(name), do: name |> convert_string_to_name |> first
+
+  def first(person = %NameOfPerson.PersonName{}),
+    do: String.trim("#{String.trim(person.first_name)}")
+
+  @doc """
   Get the full name.
 
   ## Examples
@@ -223,6 +253,30 @@ defmodule NameOfPerson.PersonName do
   end
 
   @doc """
+  Checks if last name is available
+
+  ## Examples
+
+    iex> NameOfPerson.PersonName.has_last?("Mitch", "Stanley")
+    true
+    iex> NameOfPerson.PersonName.has_last?("Mitch")
+    false
+  """
+
+  def has_last?(first, middle, last),
+    do:
+      has_last?(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def has_last?(first, last),
+    do: has_last?(%NameOfPerson.PersonName{first_name: first, last_name: last})
+
+  def has_last?(name) when is_binary(name), do: name |> convert_string_to_name |> has_last?()
+
+  def has_last?(person = %NameOfPerson.PersonName{last_name: ""}), do: false
+
+  def has_last?(person = %NameOfPerson.PersonName{}), do: true
+
+  @doc """
   Returns full name with the trailing 's or ' if name ends in s.
 
   ## Examples
@@ -290,6 +344,47 @@ defmodule NameOfPerson.PersonName do
   end
 
   defp _get_initial(name), do: String.first(String.trim(name))
+
+  @doc """
+  Get the last name.
+
+  ## Examples
+
+      iex> NameOfPerson.PersonName.last("Mitch Stanley")
+      {:ok, "Stanley"}
+      iex> NameOfPerson.PersonName.last("Mitch", "Stanley")
+      {:ok, "Stanley"}
+      iex> NameOfPerson.PersonName.last(%NameOfPerson.PersonName{first_name: "Mitch", middle_name: "Blank", last_name: "Stanley"})
+      {:ok, "Stanley"}
+      iex> NameOfPerson.PersonName.last("Mitch")
+      {:error, "No last name"}
+      iex> NameOfPerson.PersonName.last!(%NameOfPerson.PersonName{first_name: "Mitch", last_name: "Stanley"})
+      "Stanley"
+      iex> NameOfPerson.PersonName.last!(%NameOfPerson.PersonName{first_name: "Mitch"})
+      nil
+
+  """
+  def last(first, middle, last),
+    do: last(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def last(first, last), do: last(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def last(name) when is_binary(name), do: name |> convert_string_to_name |> last
+
+  def last(person = %NameOfPerson.PersonName{last_name: ""}), do: {:error, "No last name"}
+
+  def last(person = %NameOfPerson.PersonName{}),
+    do: {:ok, String.trim("#{String.trim(person.last_name)}")}
+
+  def last!(first, middle, last),
+    do: last!(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
+
+  def last!(first, last), do: last!(%NameOfPerson.PersonName{first_name: first, last_name: last})
+  def last!(name) when is_binary(name), do: name |> convert_string_to_name |> last!
+
+  def last!(person = %NameOfPerson.PersonName{last_name: ""}), do: nil
+
+  def last!(person = %NameOfPerson.PersonName{}),
+    do: String.trim("#{String.trim(person.last_name)}")
 
   @doc """
   Returns a mentionable version of their name.
