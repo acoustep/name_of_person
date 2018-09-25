@@ -49,8 +49,17 @@ defmodule NameOfPerson.PersonName do
   def full(first, last), do: full(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def full(name) when is_binary(name), do: name |> convert_string_to_name |> full
   def full([name]) when is_binary(name), do: name |> convert_string_to_name |> full
-  def full([first_name, last_name]), do: full(%NameOfPerson.PersonName{first_name: first_name, last_name: last_name})
-  def full([first_name, middle_name, last_name]), do: full(%NameOfPerson.PersonName{first_name: first_name, middle_name: middle_name, last_name: last_name})
+
+  def full([first_name, last_name]),
+    do: full(%NameOfPerson.PersonName{first_name: first_name, last_name: last_name})
+
+  def full([first_name, middle_name, last_name]),
+    do:
+      full(%NameOfPerson.PersonName{
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name
+      })
 
   def full(person = %NameOfPerson.PersonName{middle_name: nil}),
     do: String.trim("#{person.first_name} #{person.last_name}")
@@ -338,7 +347,6 @@ defmodule NameOfPerson.PersonName do
 
   def last(person = %NameOfPerson.PersonName{}),
     do: {:ok, String.trim("#{String.trim(person.last_name)}")}
-
 
   @doc """
   Get the last name or return nil.
