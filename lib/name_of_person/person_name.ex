@@ -1,5 +1,5 @@
 defmodule NameOfPerson.PersonName do
-  defstruct first_name: "", middle_name: "", last_name: ""
+  defstruct first_name: "", middle_name: nil, last_name: ""
 
   @moduledoc """
   Documentation for NameOfPerson.PersonName.
@@ -62,7 +62,7 @@ defmodule NameOfPerson.PersonName do
   def full(first, last), do: full(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def full(name) when is_binary(name), do: name |> convert_string_to_name |> full
 
-  def full(person = %NameOfPerson.PersonName{middle_name: ""}),
+  def full(person = %NameOfPerson.PersonName{middle_name: nil}),
     do: String.trim("#{person.first_name} #{person.last_name}")
 
   def full(person = %NameOfPerson.PersonName{}),
@@ -232,7 +232,7 @@ defmodule NameOfPerson.PersonName do
   def possessive(person = %NameOfPerson.PersonName{last_name: ""}),
     do: _possessive("#{String.trim(person.first_name)}")
 
-  def possessive(person = %NameOfPerson.PersonName{middle_name: ""}),
+  def possessive(person = %NameOfPerson.PersonName{middle_name: nil}),
     do: _possessive("#{String.trim(person.first_name)} #{String.trim(person.last_name)}")
 
   def possessive(person = %NameOfPerson.PersonName{}),
@@ -323,7 +323,7 @@ defmodule NameOfPerson.PersonName do
 
   defp _initials(person = %NameOfPerson.PersonName{}) do
     case person do
-      %NameOfPerson.PersonName{last_name: "", middle_name: ""} ->
+      %NameOfPerson.PersonName{last_name: "", middle_name: nil} ->
         person.first_name
         |> _get_initial
         |> String.upcase()
@@ -332,7 +332,7 @@ defmodule NameOfPerson.PersonName do
         (_get_initial(person.first_name) <> _get_initial(person.middle_name))
         |> String.upcase()
 
-      %NameOfPerson.PersonName{middle_name: ""} ->
+      %NameOfPerson.PersonName{middle_name: nil} ->
         (_get_initial(person.first_name) <> initials(person.last_name))
         |> String.upcase()
 
