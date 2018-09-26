@@ -4,10 +4,12 @@ defmodule NameOfPerson.MixProject do
   def project do
     [
       app: :name_of_person,
+      description: "Helper functions for dealing with English-language names.",
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package
     ]
   end
 
@@ -24,5 +26,11 @@ defmodule NameOfPerson.MixProject do
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
+  end
+
+  defp package do
+    [ contributors: ["acoustep"],
+      licenses: ["MIT"],
+      links: [ { "GitHub", "https://github.com/acoustep/name_of_person" } ] ]
   end
 end
