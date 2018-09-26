@@ -72,14 +72,15 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.familiar("John", "Smith")
-    "John S."
-    iex> NameOfPerson.PersonName.familiar("John Smith")
-    "John S."
-    iex> NameOfPerson.PersonName.familiar("John")
-    "John"
-    iex> NameOfPerson.PersonName.familiar("John Blank Smith")
-    "John S."
+      iex> NameOfPerson.PersonName.familiar("John", "Smith")
+      "John S."
+      iex> NameOfPerson.PersonName.familiar("John Smith")
+      "John S."
+      iex> NameOfPerson.PersonName.familiar("John")
+      "John"
+      iex> NameOfPerson.PersonName.familiar("John Blank Smith")
+      "John S."
+
   """
   def familiar(first, last),
     do: familiar(%NameOfPerson.PersonName{first_name: first, last_name: last})
@@ -109,14 +110,15 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.abbreviated("John", "Smith")
-    "J. Smith"
-    iex> NameOfPerson.PersonName.abbreviated("John")
-    "John"
-    iex> NameOfPerson.PersonName.abbreviated("John Smith")
-    "J. Smith"
-    iex> NameOfPerson.PersonName.abbreviated("John Blank Smith")
-    "J. Smith"
+      iex> NameOfPerson.PersonName.abbreviated("John", "Smith")
+      "J. Smith"
+      iex> NameOfPerson.PersonName.abbreviated("John")
+      "John"
+      iex> NameOfPerson.PersonName.abbreviated("John Smith")
+      "J. Smith"
+      iex> NameOfPerson.PersonName.abbreviated("John Blank Smith")
+      "J. Smith"
+
   """
   def abbreviated(first, last),
     do: abbreviated(%NameOfPerson.PersonName{first_name: first, last_name: last})
@@ -152,14 +154,15 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.sorted("John", "Smith")
-    "Smith, John"
-    iex> NameOfPerson.PersonName.sorted("John")
-    "John"
-    iex> NameOfPerson.PersonName.sorted("John Smith")
-    "Smith, John"
-    iex> NameOfPerson.PersonName.sorted("John Blank Smith")
-    "Smith, John"
+      iex> NameOfPerson.PersonName.sorted("John", "Smith")
+      "Smith, John"
+      iex> NameOfPerson.PersonName.sorted("John")
+      "John"
+      iex> NameOfPerson.PersonName.sorted("John Smith")
+      "Smith, John"
+      iex> NameOfPerson.PersonName.sorted("John Blank Smith")
+      "Smith, John"
+
   """
   def sorted(first, last),
     do: sorted(%NameOfPerson.PersonName{first_name: first, last_name: last})
@@ -188,18 +191,18 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.possessive("John", "Smith")
-    "John Smith's"
-    iex> NameOfPerson.PersonName.possessive(["Ned", "Flanders"])
-    "Ned Flanders'"
-    iex> NameOfPerson.PersonName.possessive("John")
-    "John's"
-    iex> NameOfPerson.PersonName.possessive("John Smith")
-    "John Smith's"
-    iex> NameOfPerson.PersonName.possessive("John Blank Smith")
-    "John Blank Smith's"
-  """
+      iex> NameOfPerson.PersonName.possessive("John", "Smith")
+      "John Smith's"
+      iex> NameOfPerson.PersonName.possessive(["Ned", "Flanders"])
+      "Ned Flanders'"
+      iex> NameOfPerson.PersonName.possessive("John")
+      "John's"
+      iex> NameOfPerson.PersonName.possessive("John Smith")
+      "John Smith's"
+      iex> NameOfPerson.PersonName.possessive("John Blank Smith")
+      "John Blank Smith's"
 
+  """
   def possessive(first, last),
     do: possessive(%NameOfPerson.PersonName{first_name: first, last_name: last})
 
@@ -246,12 +249,12 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.has_last?("John", "Smith")
-    true
-    iex> NameOfPerson.PersonName.has_last?("John")
-    false
-  """
+      iex> NameOfPerson.PersonName.has_last?("John", "Smith")
+      true
+      iex> NameOfPerson.PersonName.has_last?("John")
+      false
 
+  """
   def has_last?(first, middle, last),
     do:
       has_last?(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
@@ -270,16 +273,17 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.initials("John", "Smith")
-    "JS"
-    iex> NameOfPerson.PersonName.initials("John")
-    "J"
-    iex> NameOfPerson.PersonName.initials("John Smith")
-    "JS"
-    iex> NameOfPerson.PersonName.initials("John Smith")
-    "JS"
-    iex> NameOfPerson.PersonName.initials("John Blank Smith")
-    "JBS"
+      iex> NameOfPerson.PersonName.initials("John", "Smith")
+      "JS"
+      iex> NameOfPerson.PersonName.initials("John")
+      "J"
+      iex> NameOfPerson.PersonName.initials("John Smith")
+      "JS"
+      iex> NameOfPerson.PersonName.initials("John Smith")
+      "JS"
+      iex> NameOfPerson.PersonName.initials("John Blank Smith")
+      "JBS"
+
   """
   def initials(first, last),
     do: initials(%NameOfPerson.PersonName{first_name: first, last_name: last})
@@ -358,6 +362,7 @@ defmodule NameOfPerson.PersonName do
       "Smith"
       iex> NameOfPerson.PersonName.last!("John")
       nil
+
   """
   def last!(first, middle, last),
     do: last!(%NameOfPerson.PersonName{first_name: first, middle_name: middle, last_name: last})
@@ -375,16 +380,17 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.mentionable("John", "Smith")
-    "johns"
-    iex> NameOfPerson.PersonName.mentionable("John")
-    "john"
-    iex> NameOfPerson.PersonName.mentionable("John Smith")
-    "johns"
-    iex> NameOfPerson.PersonName.mentionable("John Smith")
-    "johns"
-    iex> NameOfPerson.PersonName.mentionable("John Blank Smith")
-    "johns"
+      iex> NameOfPerson.PersonName.mentionable("John", "Smith")
+      "johns"
+      iex> NameOfPerson.PersonName.mentionable("John")
+      "john"
+      iex> NameOfPerson.PersonName.mentionable("John Smith")
+      "johns"
+      iex> NameOfPerson.PersonName.mentionable("John Smith")
+      "johns"
+      iex> NameOfPerson.PersonName.mentionable("John Blank Smith")
+      "johns"
+
   """
   def mentionable(first, last),
     do: mentionable(%NameOfPerson.PersonName{first_name: first, last_name: last})
@@ -426,8 +432,9 @@ defmodule NameOfPerson.PersonName do
 
   ## Examples
 
-    iex> NameOfPerson.PersonName.convert_string_to_name("John Quantum Firefox Smith")
-    %NameOfPerson.PersonName{first_name: "John", middle_name: "Quantum Firefox", last_name: "Smith"}
+      iex> NameOfPerson.PersonName.convert_string_to_name("John Quantum Firefox Smith")
+      %NameOfPerson.PersonName{first_name: "John", middle_name: "Quantum Firefox", last_name: "Smith"}
+
   """
   def convert_string_to_name(name) do
     name
