@@ -30,7 +30,7 @@ defmodule NameOfPerson.MixProject do
 
   defp package do
     [
-      contributors: ["acoustep"],
+      maintainers: ["Mitch Stanley"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/acoustep/name_of_person"}
     ]
