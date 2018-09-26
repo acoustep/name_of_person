@@ -261,9 +261,9 @@ defmodule NameOfPerson.PersonName do
 
   def has_last?(name) when is_binary(name), do: name |> convert_string_to_name |> has_last?()
 
-  def has_last?(person = %NameOfPerson.PersonName{last_name: ""}), do: false
+  def has_last?(%NameOfPerson.PersonName{last_name: ""}), do: false
 
-  def has_last?(person = %NameOfPerson.PersonName{}), do: true
+  def has_last?(%NameOfPerson.PersonName{}), do: true
 
   @doc """
   Returns initials of full name
@@ -343,7 +343,7 @@ defmodule NameOfPerson.PersonName do
   def last(first, last), do: last(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def last(name) when is_binary(name), do: name |> convert_string_to_name |> last
 
-  def last(person = %NameOfPerson.PersonName{last_name: ""}), do: {:error, "No last name"}
+  def last(%NameOfPerson.PersonName{last_name: ""}), do: {:error, "No last name"}
 
   def last(person = %NameOfPerson.PersonName{}),
     do: {:ok, String.trim("#{String.trim(person.last_name)}")}
@@ -365,7 +365,7 @@ defmodule NameOfPerson.PersonName do
   def last!(first, last), do: last!(%NameOfPerson.PersonName{first_name: first, last_name: last})
   def last!(name) when is_binary(name), do: name |> convert_string_to_name |> last!
 
-  def last!(person = %NameOfPerson.PersonName{last_name: ""}), do: nil
+  def last!(%NameOfPerson.PersonName{last_name: ""}), do: nil
 
   def last!(person = %NameOfPerson.PersonName{}),
     do: String.trim("#{String.trim(person.last_name)}")
