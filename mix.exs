@@ -9,7 +9,7 @@ defmodule NameOfPerson.MixProject do
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      package: package
+      package: package()
     ]
   end
 
@@ -29,8 +29,10 @@ defmodule NameOfPerson.MixProject do
   end
 
   defp package do
-    [ contributors: ["acoustep"],
+    [
+      contributors: ["acoustep"],
       licenses: ["MIT"],
-      links: [ { "GitHub", "https://github.com/acoustep/name_of_person" } ] ]
+      links: %{"GitHub" => "https://github.com/acoustep/name_of_person"}
+    ]
   end
 end
