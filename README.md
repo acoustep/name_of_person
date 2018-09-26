@@ -20,6 +20,21 @@ iex> PersonName.possessive(["Dirk", "Gentley"])
 "Dirk Gentley's"
 ```
 
+### Using with Phoenix
+
+This library can be used with Phoenix without any extra configuration. Optionally, import the module into the relevant views for more convenience.
+
+```elixir
+# views/page_view.ex
+defmodule AppNameWeb.PageView do
+  use AppNameWeb, :view
+  import NameOfPerson.PersonName, only: [familiar: 1]
+end
+
+# templates/page/index.html.eex
+<%= familiar("Eiji Niizuma") %>
+```
+
 ## Available Arguments
 
 Most functions accept from one to three string parameters, e.g. `full/1, full/2, full/3`. Additionally, you can pass a List of names or a `%NameOfPerson.PersonName{}` struct. The struct can take 3 arguments, `first_name`, `middle_name`, and `last_name`.
@@ -39,12 +54,6 @@ Most functions accept from one to three string parameters, e.g. `full/1, full/2,
 * `mentionable`
 * `possessive`
 * `sorted`
-
-## Todo
-
-* Example usage within Phoenix (Importing as a helper in templates)
-* Tag first release
-* Publish to Hex.pm
 
 ## Installation
 
