@@ -42,7 +42,9 @@ Most functions accept from one to three string parameters, e.g. `full/1, full/2,
 
 ## Todo
 
-* More testing
+* Example usage within Phoenix (Importing as a helper in templates)
+* Tag first release
+* Publish to Hex.pm
 
 ## Installation
 
